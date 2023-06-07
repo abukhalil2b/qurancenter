@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('profile')->default('student'); //student - teacher - admin
             $table->string('name');
+            $table->string('idcard')->unique();
             $table->string('phone',10)->nullable();
             $table->string('password');
             $table->rememberToken();

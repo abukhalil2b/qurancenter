@@ -5,11 +5,11 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- phone  -->
+        <!-- idcard  -->
         <div>
-            <x-input-label for="phone" :value=" ' رقم الهاتف' " />
-            <x-text-input id="phone" class="block mt-1 w-full" type="number" name="phone" :value="old('phone')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+            <x-input-label for="idcard" :value=" 'الرقم المدني' " />
+            <x-text-input id="idcard" class="block mt-1 w-full" type="number" name="idcard" :value="old('idcard')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('idcard')" class="mt-2" />
         </div>
 
         <!-- Password -->

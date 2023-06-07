@@ -7,7 +7,8 @@ use App\Http\Controllers\MarkController;
 use App\Http\Controllers\StudentSubjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
-use App\Http\Livewire\Mark\Student\UpdateMark as StudentUpdateMark;
+use App\Http\Controllers\UserController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,31 @@ Route::get('/', function () {
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/dashboard',[ProfileController::class,'dashboard'])
     ->name('dashboard');
+});
+
+/*---- teacher -----*/
+Route::group(['middleware'=>'auth'],function(){
+
+    Route::get('teacher/show/{teacher}',[UserController::class,'showTeacher'])
+    ->name('teacher.show');
+
+    Route::post('teacher/update/{teacher}',[UserController::class,'updateTeacher'])
+    ->name('teacher.update');
+
+    Route::post('teacher/store',[UserController::class,'storeTeacher'])
+    ->name('teacher.store');
+});
+
+
+/*---- student -----*/
+Route::group(['middleware'=>'auth'],function(){
+
+    Route::get('student/show/{student}',[UserController::class,'showStudent'])
+    ->name('student.show');
+
+    Route::post('student/update/{student}',[UserController::class,'updateStudent'])
+    ->name('student.update');
+
 });
 
 /*---- subject -----*/
@@ -89,8 +115,6 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('mark/student/store',[MarkController::class,'store'])
     ->name('mark.student.store');
 
-    Route::get('mark/student/index/{task}',StudentUpdateMark::class)
-    ->name('mark.student.update');
 
 });
 require __DIR__.'/auth.php';

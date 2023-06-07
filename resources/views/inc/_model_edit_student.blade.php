@@ -1,28 +1,20 @@
 <div class="p-3 mt-1 space-y-6">
 
 
-    <x-primary-button class="w-20" x-data="" x-on:click.prevent="$dispatch('open-modal', 'create_student')">
-        + طالب
-    </x-primary-button>
+    <div class="text-xs p-1 cursor-pointer" x-data="" x-on:click.prevent="$dispatch('open-modal', 'edit_student{{ $student->id }}')">
+       تعديل
+    </div>
 
-    <x-modal name="create_student" :show="$errors->any()" focusable>
+    <x-modal name="edit_student{{ $student->id }}" :show="$errors->any()" focusable>
 
-        <form method="post" action="{{ route('student_subject.student.store',$subject->id) }}" class="p-2 text-[#035b62]">
+        <form method="post" action="{{ route('student.update',$student->id) }}" class="p-2 text-[#035b62]">
             @csrf
-            
-            <div class="mt-6 flex items-center gap-1">
-                <div class="text-xs">
-                    الرقم المدني
-                </div>
-                <x-text-input type="number" name="idcard" class="mt-1 block w-full" />
-            </div>
-            <x-input-error :messages="$errors->get('idcard')" />
 
             <div class="mt-6 flex items-center gap-1">
                 <div class="text-xs">
                     الهاتف
                 </div>
-                <x-text-input type="number" name="phone" class="mt-1 block w-full" />
+                <x-text-input type="number" name="phone" class="mt-1 block w-full" value="{{ $student->phone }}" />
             </div>
             <x-input-error :messages="$errors->get('phone')" />
 
@@ -30,7 +22,7 @@
                 <div class="text-xs">
                     الاسم
                 </div>
-                <x-text-input type="text" name="name" class="mt-1 block w-full" />
+                <x-text-input type="text" name="name" class="mt-1 block w-full" value="{{ $student->name }}" />
             </div>
             <x-input-error :messages="$errors->get('name')" />
 

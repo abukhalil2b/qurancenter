@@ -22,11 +22,15 @@ class RecordController extends Controller
 
     public function store(Request $request)
     {
-        // return $request->all();
+        
 
         $subject_id = $request->subject_id;
 
-        $record = Record::where('subject_id', $subject_id)->first();
+        $record = Record::where('subject_id', $subject_id)
+        ->latest('id')
+        ->first();
+
+        // return $record;
 
         if ($record) {
 

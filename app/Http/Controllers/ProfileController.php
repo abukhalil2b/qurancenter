@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,21 +13,26 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    
-    public function dashboard(): View
+
+    public function dashboard()
     {
         $loggedUser = auth()->user();
-      
-        if($loggedUser->profile == 'teacher'){
 
-            $subjects = Subject::where('teacher_id',$loggedUser->id)->get();
+        if ($loggedUser->profile == 'teacher') {
 
-            return view('dashboard',compact('subjects'));
+            $subjects = Subject::where('teacher_id', $loggedUser->id)->get();
+
+            return view('dashboard', compact('subjects'));
         }
-        
-  
-    }
 
+        if ($loggedUser->profile == 'admin') {
+
+            $teachers = User::where('profile', 'teacher')->get();
+
+            return view('admin_dashboard', compact('teachers'));
+        }
+        abort(403);
+    }
 
     public function edit(Request $request): View
     {

@@ -16,12 +16,33 @@ class MarkController extends Controller
      */
     public function index(Task $task, Subject $subject)
     {
-        $students = DB::table('student_subject')
+
+        $studentSubjects = DB::table('student_subject')
             ->select('users.id', 'name', 'phone')
             ->join('users', 'student_subject.student_id', '=', 'users.id')
-            ->where('subject_id', $subject->id)->get();
+            ->get();
 
-        return view('mark.student.index', compact('students', 'task','subject'));
+        $marks = Mark::where('task_id',$task->id)->get();
+
+        $students = $studentSubjects->map(function($student) use($marks) {
+            $studentObj['id'] = $student->id;
+            $studentObj['name'] = $student->name;
+            $studentObj['phone'] = $student->phone;
+            $studentObj['mark'] = null;
+
+            foreach($marks as $mark){
+
+                if($mark->student_id == $student->id){
+                    $markObj['memorize'] = $mark->memorize;
+                    $markObj['recite'] = $mark->recite;
+                    $markObj['behave'] = $mark->behave;
+                    $studentObj['mark'] = $markObj;
+                }
+            }
+            return (object) $studentObj;
+        });
+
+        return view('mark.student.index', compact('students', 'task', 'subject'));
     }
 
     /**
@@ -58,20 +79,31 @@ class MarkController extends Controller
             ]);
         }
 
-        return redirect()->route('mark.student.index',['task'=>$request->task_id,'subject'=>$request->subject_id]);
+        return redirect()->route('mark.student.index', ['task' => $request->task_id, 'subject' => $request->subject_id]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Task $task, User $student,Subject $subject)
+    public function show(Task $task, User $student, Subject $subject)
     {
         $mark = Mark::where([
             'student_id' => $student->id,
             'task_id' => $task->id
         ])->first();
 
-        return view('mark.student.show', compact('student', 'task','subject','mark'));
+        if ($mark) {
+            $memorize = $mark->memorize;
+            $recite = $mark->recite;
+            $behave = $mark->behave;
+        } else {
+            $memorize = 0;
+            $recite = 0;
+            $behave = 0;
+        }
+
+
+        return view('mark.student.show', compact('student', 'task', 'subject', 'mark', 'memorize', 'recite', 'behave'));
     }
 
     /**

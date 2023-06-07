@@ -11,8 +11,8 @@
             @csrf
 
             <div class="mt-6 flex items-center gap-1">
-                <div class="text-xs w-64">
-                    المهمة
+                <div class="text-xs">
+                    المهمة مثلاً: حفظ الصفحة رقم 562
                 </div>
                 <x-text-input type="text" name="title" class="mt-1 block w-full" />
             </div>

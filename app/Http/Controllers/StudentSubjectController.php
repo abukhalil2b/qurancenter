@@ -26,6 +26,7 @@ class StudentSubjectController extends Controller
     {
 
         $request->validate([
+            'idcard' => 'required|unique:users',
             'phone' => 'required',
             'name' => 'required'
         ]);
@@ -34,6 +35,7 @@ class StudentSubjectController extends Controller
             'profile' => 'student',
             'name' => $request->name,
             'phone' => $request->phone,
+            'idcard' => $request->idcard,
             'password' => Hash::make($request->phone)
         ]);
 

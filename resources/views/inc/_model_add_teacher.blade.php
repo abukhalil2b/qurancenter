@@ -1,13 +1,13 @@
 <div class="p-3 mt-1 space-y-6">
 
 
-    <x-primary-button class="w-20" x-data="" x-on:click.prevent="$dispatch('open-modal', 'create_student')">
-        + طالب
+    <x-primary-button class="w-20" x-data="" x-on:click.prevent="$dispatch('open-modal', 'create_teacher')">
+        + معلم
     </x-primary-button>
 
-    <x-modal name="create_student" :show="$errors->any()" focusable>
+    <x-modal name="create_teacher" :show="$errors->any()" focusable>
 
-        <form method="post" action="{{ route('student_subject.student.store',$subject->id) }}" class="p-2 text-[#035b62]">
+        <form method="post" action="{{ route('teacher.store') }}" class="p-2 text-[#035b62]">
             @csrf
             
             <div class="mt-6 flex items-center gap-1">

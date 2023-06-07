@@ -10,12 +10,12 @@
         <form method="post" action="{{ route('record.store') }}" class="p-2 text-[#035b62]">
             @csrf
 
-            <div class="mt-6 flex items-center gap-1">
-
-                <div class="text-xs w-64">
-                    فتح السجل بتاريخ:( {{ date('d-m-Y') }} )
-                </div>
-
+            <div>
+                <div>قبل فتح السجل تأكد من اضافة كل الطلبة في مادة {{ $subject->title }}</div>
+                <div> في هذا السجل سيتم اضافة الطلاب المسجلين في المادة</div>
+            </div>
+            <div class="text-xs">
+                فتح السجل بتاريخ:( {{ date('d-m-Y') }} )
             </div>
 
             <input type="hidden" value="{{ $subject->id }}" name="subject_id">
@@ -29,7 +29,6 @@
                     حفظ
                 </x-primary-button>
             </div>
-
 
         </form>
     </x-modal>
