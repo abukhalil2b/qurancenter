@@ -58,6 +58,9 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('subject/store',[SubjectController::class,'store'])
     ->name('subject.store');
 
+    Route::post('subject/update/{subject}',[SubjectController::class,'update'])
+    ->name('subject.update');
+
 });
 
 /*---- record -----*/
@@ -80,6 +83,13 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('student_subject/student/store/{subject}',[StudentSubjectController::class,'studentStore'])
     ->name('student_subject.student.store');
 
+    Route::match(['GET','POST'],'student_subject/student/search_by_idcard/{subject}',[StudentSubjectController::class,'searchByIdcard'])
+    ->name('student_subject.student.search_by_idcard');
+
+    Route::post('student_subject/student/add_student_to_subject',[StudentSubjectController::class,'addStudentToSubject'])
+    ->name('student_subject.student.add_student_to_subject');
+    
+    
 });
 
 /*---- attendances -----*/

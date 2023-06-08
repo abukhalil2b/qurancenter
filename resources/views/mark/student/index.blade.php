@@ -11,6 +11,10 @@
         <div class="text-xs text-red-600 bg-red-50 p-1">
             لم يتم تقييمه
         </div>
+        @else
+        <div class="text-xs text-green-600 bg-green-50 p-1">
+            تم تقييمه
+        </div>
         @endif
     </div>
 </div>

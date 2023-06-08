@@ -46,7 +46,13 @@ class SubjectController extends Controller
      */
     public function update(Request $request, Subject $subject)
     {
-        //
+        $request->validate([
+            'title' => 'required'
+        ]);
+
+        $subject->update(['title'=>$request->title]);
+
+        return back();
     }
 
     /**

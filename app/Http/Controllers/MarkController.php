@@ -20,10 +20,12 @@ class MarkController extends Controller
         $studentSubjects = DB::table('student_subject')
             ->select('users.id', 'name', 'phone')
             ->join('users', 'student_subject.student_id', '=', 'users.id')
+            ->where('student_subject.subject_id',$subject->id)
             ->get();
 
         $marks = Mark::where('task_id',$task->id)->get();
 
+        //add marks to each student
         $students = $studentSubjects->map(function($student) use($marks) {
             $studentObj['id'] = $student->id;
             $studentObj['name'] = $student->name;

@@ -15,9 +15,9 @@ class StudentSubjectController extends Controller
     public function studentIndex(Subject $subject)
     {
         $students = DB::table('student_subject')
-        ->select('users.id','name','phone')
-        ->join('users','student_subject.student_id','=','users.id')
-        ->where('subject_id', $subject->id)->get();
+            ->select('users.id', 'name', 'phone','idcard')
+            ->join('users', 'student_subject.student_id', '=', 'users.id')
+            ->where('subject_id', $subject->id)->get();
 
         return view('student_subject.student.index', compact('students', 'subject'));
     }
@@ -45,5 +45,39 @@ class StudentSubjectController extends Controller
         ]);
 
         return back();
+    }
+
+    public function searchByIdcard(Request $request, Subject $subject)
+    {
+        $student = null;
+
+        if ($request) {
+
+            $student = User::where('idcard', $request->idcard)
+                ->where('id', '<>', 1)
+                ->where('profile', 'student')
+                ->first();
+        }
+
+        return view('student_subject.student.search_by_idcard', compact('subject', 'student'));
+    }
+
+    public function addStudentToSubject(Request $request)
+    {
+
+        $exist = DB::table('student_subject')->where([
+            'student_id' => $request->student_id,
+            'subject_id' => $request->subject_id
+        ])->first();
+
+        if (!$exist) {
+
+            DB::table('student_subject')->insert([
+                'student_id' => $request->student_id,
+                'subject_id' => $request->subject_id
+            ]);
+        }
+
+        return redirect()->route('student_subject.student.index',$request->subject_id);
     }
 }

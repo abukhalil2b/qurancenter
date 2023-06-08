@@ -2,7 +2,7 @@
 
     <div class="p-1 max-w-7xl mx-auto sm:px-6 lg:px-8">
         <span class="text-red-800">المادة: </span>{{ $subject->title }}
-        @include('inc._model_add_record')
+        @include('inc._modal_add_record')
 
         @foreach($records as $record)
         <div class="mt-2 bg-white overflow-hidden shadow-sm sm:rounded-lg">

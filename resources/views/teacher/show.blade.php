@@ -11,7 +11,7 @@
               
                 {{ $teacher->phone }}
             </div>
-            @include('inc._model_edit_teacher')
+            @include('inc._modal_edit_teacher')
         </div>
 
 

@@ -1,20 +1,20 @@
 <div class="p-3 mt-1 space-y-6">
 
 
-    <x-primary-button class="w-20" x-data="" x-on:click.prevent="$dispatch('open-modal', 'create_subject')">
-        + مادة
-    </x-primary-button>
+    <div class=" cursor-pointer" x-data="" x-on:click.prevent="$dispatch('open-modal', 'edit_subject')">
+    تعديل
+    </div>
 
-    <x-modal name="create_subject" :show="$errors->any()" focusable>
+    <x-modal name="edit_subject" :show="$errors->any()" focusable>
         
-        <form method="post" action="{{ route('subject.store') }}" class="p-2 text-[#035b62]">
+        <form method="post" action="{{ route('subject.update',$subject->id) }}" class="p-2 text-[#035b62]">
             @csrf
 
             <div class="mt-6 flex items-center gap-1">
-                <div class="text-xs">
+                <div class="text-xs w-52">
                     اسم المادة (مثلا: القرآن الكريم)
                 </div>
-                <x-text-input type="text" name="title" class="mt-1 block w-full" />
+                <x-text-input type="text" name="title" class="mt-1 block w-full" value="{{ $subject->title }}"/>
             </div>
             <x-input-error :messages="$errors->get('title')" />
 

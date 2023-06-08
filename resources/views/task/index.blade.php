@@ -2,7 +2,7 @@
 
     <div class="p-1 max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-        @include('inc._model_add_task')
+        @include('inc._modal_add_task')
         <div class="p-3">
             <div class=" text-blue-400">{{ $record->title }}</div>
             <div class="text-xs text-gray-400">{{ $subject->title }}</div>

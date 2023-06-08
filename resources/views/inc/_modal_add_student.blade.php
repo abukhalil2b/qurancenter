@@ -1,8 +1,7 @@
-<div class="p-3 mt-1 space-y-6">
+<div class="space-y-6">
 
-
-    <x-primary-button class="w-20" x-data="" x-on:click.prevent="$dispatch('open-modal', 'create_student')">
-        + طالب
+    <x-primary-button class="w-32" x-data="" x-on:click.prevent="$dispatch('open-modal', 'create_student')">
+        + طالب جديد
     </x-primary-button>
 
     <x-modal name="create_student" :show="$errors->any()" focusable>
