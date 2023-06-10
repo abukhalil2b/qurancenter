@@ -12,7 +12,7 @@
             <label class="mt-2 block bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-3 text-md text-red-800">
                     <input type="checkbox" value="{{ $permission->id }}" name="permissionIds[]" @if( $permission->allow ) checked @endif>
-                    {{ $permission->title }}
+                    {{ $permission->slug }}
                 </div>
             </label>
             @endforeach
