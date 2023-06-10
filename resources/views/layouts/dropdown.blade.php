@@ -17,8 +17,9 @@
             @csrf
             <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-              تسجيل الخروج
+                تسجيل الخروج
             </x-dropdown-link>
         </form>
+
     </x-slot>
 </x-dropdown>

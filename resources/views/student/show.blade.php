@@ -35,6 +35,7 @@
                     {{ $subject->absentCount }}
                 </div>
             </div>
+            @include('inc._modal_remove_student_from_subject')
             @endforeach
         </div>
 
@@ -59,7 +60,7 @@
                 {{ $reciteCount + $memorizeCount + $behaveCount }}
             </div>
         </div>
-
+       
     </div>
 
 </x-app-layout>

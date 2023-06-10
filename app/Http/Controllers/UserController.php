@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Center;
 use App\Models\Mark;
 use App\Models\Record;
 use App\Models\User;
@@ -14,45 +15,30 @@ class UserController extends Controller
 {
 
 
-    public function storeTeacher(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'idcard' => 'required'
-        ]);
+    public function indexStudent(){
+        
+        $loggedUser = auth()->user();
 
-        User::create([
-            'profile' => 'teacher',
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'idcard' => $request->idcard,
-            'password' => Hash::make($request->idcard),
-        ]);
+        $students = User::where(['profile'=>'student','center_id'=>$loggedUser->center_id])->get();
 
-        return back();
+        return view('student.index', compact('students'));
     }
 
-    public function updateTeacher(Request $request, User $teacher)
-    {
-        $request->validate([
-            'name' => 'required',
-            'phone' => 'required'
-        ]);
+    public function absenceCountStudent(){
+        
+        $loggedUser = auth()->user();
 
-        $teacher->update([
-            'name' => $request->name,
-            'phone' => $request->phone
-        ]);
+        $students = Attendance::where('attendances.center_id',$loggedUser->center_id)
+        ->whereNull('attend_at')
+        ->select(DB::raw('COUNT(student_id) AS absenceTimes'),'name')
+        ->join('users','attendances.student_id','=','users.id')
+        ->groupby('student_id')
+        ->orderby('absenceTimes','desc')
+        ->get();
 
-        return back();
+        return view('student.absence_count', compact('students'));
     }
-
-    public function showTeacher(User $teacher)
-    {
-        return view('teacher.show', compact('teacher'));
-    }
-
+    
     public function updateStudent(Request $request, User $student)
     {
         $request->validate([
@@ -99,4 +85,5 @@ class UserController extends Controller
 
         return view('student.show', compact('student', 'subjectWithAbsentCount', 'reciteCount', 'memorizeCount', 'behaveCount'));
     }
+
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\CenterController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\TaskController;
@@ -27,22 +29,47 @@ Route::group(['middleware'=>'auth'],function(){
     ->name('dashboard');
 });
 
+/*---- center -----*/
+Route::group(['middleware'=>'auth'],function(){
+
+    Route::get('admin/center/index',[CenterController::class,'index'])
+    ->name('admin.center.index');
+
+    Route::get('admin/center/show/{center}',[CenterController::class,'show'])
+    ->name('admin.center.show');
+
+    Route::post('admin/center/store',[CenterController::class,'store'])
+    ->name('admin.center.store');
+
+    Route::post('admin/center/update/{center}',[CenterController::class,'update'])
+    ->name('admin.center.update');
+});
+
 /*---- teacher -----*/
 Route::group(['middleware'=>'auth'],function(){
 
-    Route::get('teacher/show/{teacher}',[UserController::class,'showTeacher'])
-    ->name('teacher.show');
+    Route::get('admin/teacher/index/{center}',[TeacherController::class,'index'])
+    ->name('admin.teacher.index');
 
-    Route::post('teacher/update/{teacher}',[UserController::class,'updateTeacher'])
-    ->name('teacher.update');
+    Route::get('admin/teacher/show/{teacher}',[TeacherController::class,'show'])
+    ->name('admin.teacher.show');
 
-    Route::post('teacher/store',[UserController::class,'storeTeacher'])
-    ->name('teacher.store');
+    Route::post('admin/teacher/update/{teacher}',[TeacherController::class,'update'])
+    ->name('admin.teacher.update');
+
+    Route::post('admin/teacher/store',[TeacherController::class,'store'])
+    ->name('admin.teacher.store');
 });
 
 
 /*---- student -----*/
 Route::group(['middleware'=>'auth'],function(){
+
+    Route::get('student/index',[UserController::class,'indexStudent'])
+    ->name('student.index');
+
+    Route::get('student/absence_count',[UserController::class,'absenceCountStudent'])
+    ->name('student.absence_count');
 
     Route::get('student/show/{student}',[UserController::class,'showStudent'])
     ->name('student.show');
@@ -50,7 +77,10 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('student/update/{student}',[UserController::class,'updateStudent'])
     ->name('student.update');
 
+
 });
+
+
 
 /*---- subject -----*/
 Route::group(['middleware'=>'auth'],function(){
@@ -61,6 +91,11 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('subject/update/{subject}',[SubjectController::class,'update'])
     ->name('subject.update');
 
+    Route::get('subject/tasks/{subject}',[SubjectController::class,'subjectTasks'])
+    ->name('subject.tasks');
+
+    Route::post('subject/remove_student/{subject}',[SubjectController::class,'removeStudent'])
+    ->name('subject.remove_student');
 });
 
 /*---- record -----*/
@@ -111,6 +146,9 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::post('task/store/{record}',[TaskController::class,'store'])
     ->name('task.store');
+
+    Route::post('task/update/{task}',[TaskController::class,'update'])
+    ->name('task.update');
 });
 
 /*---- marks -----*/
@@ -124,7 +162,6 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::post('mark/student/store',[MarkController::class,'store'])
     ->name('mark.student.store');
-
 
 });
 require __DIR__.'/auth.php';

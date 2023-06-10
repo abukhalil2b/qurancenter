@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SubjectController extends Controller
 {
@@ -19,26 +20,28 @@ class SubjectController extends Controller
 
         Subject::create([
             'title' => $request->title,
-            'teacher_id'=> $loggedUser->id
+            'teacher_id' => $loggedUser->id
         ]);
 
         return back();
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Subject $subject)
+
+    public function subjectTasks(Subject $subject)
     {
-        //
+        $tasks = $subject->tasks;
+
+        return view('subject.tasks', compact('tasks', 'subject'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Subject $subject)
+ 
+    public function removeStudent(Request $request, Subject $subject)
     {
-        //
+        DB::table('student_subject')
+            ->where(['student_id' => $request->student_id, 'subject_id' => $subject->id])
+            ->delete();
+
+        return back();
     }
 
     /**
@@ -50,7 +53,7 @@ class SubjectController extends Controller
             'title' => 'required'
         ]);
 
-        $subject->update(['title'=>$request->title]);
+        $subject->update(['title' => $request->title]);
 
         return back();
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Center;
 use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -22,14 +23,15 @@ class ProfileController extends Controller
 
             $subjects = Subject::where('teacher_id', $loggedUser->id)->get();
 
-            return view('dashboard', compact('subjects'));
+            return view('dashboard', compact('subjects','loggedUser'));
         }
 
         if ($loggedUser->profile == 'admin') {
 
-            $teachers = User::where('profile', 'teacher')->get();
 
-            return view('admin_dashboard', compact('teachers'));
+             $centers = Center::all();
+
+            return view('admin.dashboard', compact('centers'));
         }
         abort(403);
     }

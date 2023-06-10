@@ -22,13 +22,13 @@ class RecordController extends Controller
 
     public function store(Request $request)
     {
-        
+
 
         $subject_id = $request->subject_id;
 
         $record = Record::where('subject_id', $subject_id)
-        ->latest('id')
-        ->first();
+            ->latest('id')
+            ->first();
 
         // return $record;
 
@@ -60,13 +60,16 @@ class RecordController extends Controller
     private function addStudentToAttendace($subjectId, $record)
     {
 
+        $loggedUser = auth()->user();
+
         $studentSubjects = DB::table('student_subject')
             ->where('subject_id', $subjectId)->get();
         foreach ($studentSubjects as $studentSubject) {
 
             Attendance::create([
                 'student_id' => $studentSubject->student_id,
-                'record_id' => $record->id
+                'record_id' => $record->id,
+                'center_id' => $loggedUser->center_id
             ]);
         }
     }

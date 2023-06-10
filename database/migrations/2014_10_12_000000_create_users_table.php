@@ -11,6 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('centers', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->timestamps();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('profile')->default('student'); //student - teacher - admin
@@ -18,6 +24,9 @@ return new class extends Migration
             $table->string('idcard')->unique();
             $table->string('phone',10)->nullable();
             $table->string('password');
+
+            $table->unsignedBigInteger('center_id');
+
             $table->rememberToken();
             $table->timestamps();
         });

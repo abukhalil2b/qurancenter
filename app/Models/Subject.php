@@ -12,4 +12,9 @@ class Subject extends Model
     {
         return $this->belongsTo(User::class,'teacher_id');
     }
+
+    public function tasks()
+    {
+        return $this->hasManyThrough(Task::class,Record::class);
+    }
 }

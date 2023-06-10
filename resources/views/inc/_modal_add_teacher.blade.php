@@ -7,7 +7,7 @@
 
     <x-modal name="create_teacher" :show="$errors->any()" focusable>
 
-        <form method="post" action="{{ route('teacher.store') }}" class="p-2 text-[#035b62]">
+        <form method="post" action="{{ route('admin.teacher.store') }}" class="p-2 text-[#035b62]">
             @csrf
             
             <div class="mt-6 flex items-center gap-1">

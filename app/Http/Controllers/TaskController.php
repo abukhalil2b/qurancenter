@@ -55,7 +55,13 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $request->validate([
+            'title' => 'required'
+        ]);
+
+        $task->update(['title'=>$request->title]);
+
+        return back();
     }
 
     /**

@@ -18,4 +18,7 @@ class User extends Authenticatable
     ];
 
 
+    public function center(){
+        return $this->belongsTo(Center::class);
+    }
 }

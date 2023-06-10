@@ -23,6 +23,8 @@ return new class extends Migration
 
             $table->dateTime('attend_at')->nullable();
             
+            $table->unsignedBigInteger('center_id');
+
             $table->timestamps();
         });
     }
