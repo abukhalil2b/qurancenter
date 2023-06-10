@@ -14,6 +14,12 @@
                     <span class="text-red-600">{{__('phone')}}</span>
                     {{ $teacher->phone }}
                 </div>
+
+                <div>
+                    <a href="{{ route('admin.permission.user.index',$teacher->id) }}">
+                        الصلاحيات
+                    </a>
+                </div>
             </div>
         </div>
         @endforeach

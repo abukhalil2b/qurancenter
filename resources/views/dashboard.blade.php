@@ -7,8 +7,14 @@
                 {{ $loggedUser->center->title }}
             </div>
            <div class="p-3 mt-2 flex gap-3">
+
+            @if(auth()->user()->hasPermission('student.index'))
            <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('student.index') }}">الطلاب</a>
+           @endif
+
+           @if(auth()->user()->hasPermission('student.absence_count'))
            <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('student.absence_count') }}">مرات الغياب</a>
+           @endif
            </div>
         </div>
 

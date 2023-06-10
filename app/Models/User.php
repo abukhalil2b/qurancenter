@@ -21,4 +21,12 @@ class User extends Authenticatable
     public function center(){
         return $this->belongsTo(Center::class);
     }
+
+    public function permissions(){
+        return $this->belongsToMany(Permission::class,'user_permission','user_id','permission_id');
+    }
+
+    public function hasPermission($slug){
+        return (bool) $this->permissions()->where('slug',$slug)->first();
+    }
 }

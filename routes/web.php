@@ -6,6 +6,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\MarkController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\StudentSubjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
@@ -66,9 +67,11 @@ Route::group(['middleware'=>'auth'],function(){
 Route::group(['middleware'=>'auth'],function(){
 
     Route::get('student/index',[UserController::class,'indexStudent'])
+    ->middleware('permission:student.index')
     ->name('student.index');
 
     Route::get('student/absence_count',[UserController::class,'absenceCountStudent'])
+    ->middleware('student.absence_count')
     ->name('student.absence_count');
 
     Route::get('student/show/{student}',[UserController::class,'showStudent'])
@@ -162,6 +165,22 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::post('mark/student/store',[MarkController::class,'store'])
     ->name('mark.student.store');
+});
 
+/*---- permission -----*/
+Route::group(['middleware'=>'auth'],function(){
+
+    Route::get('admin/permission/index',[PermissionController::class,'index'])
+    ->name('admin.permission.index');
+
+    Route::post('admin/permission/store',[PermissionController::class,'store'])
+    ->name('admin.permission.store');
+
+    Route::get('admin/permission/user/index/{user}',[PermissionController::class,'permissionUserIndex'])
+    ->name('admin.permission.user.index');
+
+    Route::post('admin/permission/user/update/{user}',[PermissionController::class,'permissionUserUpdate'])
+    ->name('admin.permission.user.update');
+    
 });
 require __DIR__.'/auth.php';
