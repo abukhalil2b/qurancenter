@@ -7,7 +7,7 @@
         @foreach($permissions as $permission)
         <div class="mt-2 bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-3 text-md text-red-800">
-                {{ $permission->title }}
+                {{ $permission->slug }}
             </div>
         </div>
         @endforeach

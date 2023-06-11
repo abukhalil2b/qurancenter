@@ -6,19 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\Center;
+use App\Models\Subject;
 use App\Models\User;
 
 class TaskController extends Controller
 {
     public function index(Center $center)
     {
-        // $teachers =  User::where('profile', 'teacher')
-        //     ->where('center_id', $center->id)
-        //     ->with(['subjects' => fn ($sub) => $sub->with('tasks')])
-        //     ->get();
+        $teacherIds = User::where(['profile' => 'teacher','center_id' =>  $center->id])->pluck('id');
 
-        // return $teachers;
+        $subjectsWithTasks = Subject::whereIn('teacher_id',$teacherIds)
+        ->with('tasks')
+        ->get();
 
-        // return view('admin.task.index', compact('tasks', 'center'));
+        return view('admin.task.index', compact('subjectsWithTasks', 'center'));
     }
 }
