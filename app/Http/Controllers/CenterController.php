@@ -44,7 +44,6 @@ class CenterController extends Controller
     public function show(Center $center)
     {
         
-
         return view('admin.center.show',compact('center'));
     }
 

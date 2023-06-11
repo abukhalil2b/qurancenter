@@ -22,6 +22,10 @@ class User extends Authenticatable
         return $this->belongsTo(Center::class);
     }
 
+    public function subjects(){
+        return $this->hasMany(Subject::class,'teacher_id');
+    }
+
     public function permissions(){
         return $this->belongsToMany(Permission::class,'user_permission','user_id','permission_id');
     }
@@ -29,4 +33,5 @@ class User extends Authenticatable
     public function hasPermission($slug){
         return (bool) $this->permissions()->where('slug',$slug)->first();
     }
+
 }

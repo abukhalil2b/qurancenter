@@ -6,9 +6,17 @@
         </div>
 
         <div class="mt-5 flex gap-2">
-            
-            <a href="{{ route('admin.teacher.index',$center->id) }}">
+
+            <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('admin.teacher.index',$center->id) }}">
                 المعلمين
+            </a>
+
+            <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('admin.student.index',$center->id) }}">
+                الطلاب
+            </a>
+
+            <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('admin.task.index',$center->id) }}">
+                المهام
             </a>
 
         </div>

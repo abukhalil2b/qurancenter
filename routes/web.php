@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\Admin\TaskController as AdminTaskController;
 use App\Http\Controllers\MarkController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\StudentSubjectController;
@@ -46,7 +48,7 @@ Route::group(['middleware'=>'auth'],function(){
     ->name('admin.center.update');
 });
 
-/*---- teacher -----*/
+/*---- admin teacher -----*/
 Route::group(['middleware'=>'auth'],function(){
 
     Route::get('admin/teacher/index/{center}',[TeacherController::class,'index'])
@@ -60,6 +62,26 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::post('admin/teacher/store',[TeacherController::class,'store'])
     ->name('admin.teacher.store');
+    
+});
+
+
+/*---- admin student -----*/
+Route::group(['middleware'=>'auth'],function(){
+
+    Route::get('admin/student/index/{center}',[StudentController::class,'index'])
+    ->name('admin.student.index');
+
+    Route::get('admin/student/show/{student}',[StudentController::class,'show'])
+    ->name('admin.student.show');
+});
+
+/*---- admin task -----*/
+Route::group(['middleware'=>'auth'],function(){
+
+    Route::get('admin/task/index/{center}',[AdminTaskController::class,'index'])
+    ->name('admin.task.index');
+
 });
 
 

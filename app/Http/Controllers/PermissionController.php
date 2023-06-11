@@ -36,7 +36,7 @@ class PermissionController extends Controller
 
             $perObj['id'] = $permission->id;
 
-            $perObj['title'] = $permission->title;
+            $perObj['slug'] = $permission->slug;
 
             $perObj['cate'] = $permission->cate;
 
