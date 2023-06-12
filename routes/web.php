@@ -121,6 +121,9 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::post('subject/remove_student/{subject}',[SubjectController::class,'removeStudent'])
     ->name('subject.remove_student');
+
+    Route::get('subject/marks/{subject}',[SubjectController::class,'subjectMarks'])
+    ->name('subject.marks');
 });
 
 /*---- record -----*/

@@ -19,9 +19,11 @@ class UserController extends Controller
         
         $loggedUser = auth()->user();
 
+        $center = Center::findOrFail($loggedUser->center_id);
+
         $students = User::where(['profile'=>'student','center_id'=>$loggedUser->center_id])->get();
 
-        return view('student.index', compact('students'));
+        return view('student.index', compact('students','center'));
     }
 
     public function absenceCountStudent(){

@@ -25,6 +25,8 @@ class StudentSubjectController extends Controller
     public function studentStore(Request $request, Subject $subject)
     {
 
+        $loggedUser = auth()->user();
+
         $request->validate([
             'idcard' => 'required|unique:users',
             'phone' => 'required',
@@ -33,6 +35,7 @@ class StudentSubjectController extends Controller
 
         $student = User::create([
             'profile' => 'student',
+            'center_id' => $loggedUser->center_id,
             'name' => $request->name,
             'phone' => $request->phone,
             'idcard' => $request->idcard,

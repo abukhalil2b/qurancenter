@@ -40,6 +40,9 @@
                     <a class="w-52 p-1 rounded border text-center text-xs" href="{{ route('subject.tasks',$subject->id) }}">
                         المهام المسجلة في هذه المادة  
                     </a>
+                    <a class="w-52 p-1 rounded border text-center text-xs" href="{{ route('subject.marks',$subject->id) }}">
+                        نقاط الطلاب في هذه المادة 
+                    </a>
                 </div>
             </div>
             @endforeach

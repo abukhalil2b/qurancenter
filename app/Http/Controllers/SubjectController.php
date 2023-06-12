@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mark;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +35,29 @@ class SubjectController extends Controller
         return view('subject.tasks', compact('tasks', 'subject'));
     }
 
- 
+    public function subjectMarks(Subject $subject)
+    {
+        $taskIds = $subject->tasks()->pluck('tasks.id');
+        // return $taskIds;
+        $studentMarks = Mark::whereIn('task_id', $taskIds)
+            ->select('name', DB::raw("SUM(memorize) as memorize, SUM(recite) as recite, SUM(behave) as behave"), DB::raw("(SUM(memorize) + SUM(recite) + SUM(behave)) as totalPoints"))
+            ->join('users', 'marks.student_id', '=', 'users.id')
+            ->groupby('student_id')
+            ->orderby('totalPoints', 'DESC')
+            ->get();
+        //     return $studentMarks ;
+        // $studentMarks = $studentMarks->map(function ($mark) {
+        //     $markObj['name'] = $mark->name;
+        //     $markObj['total'] = $mark->memorize + $mark->recite + $mark->behave;
+
+        //     return (object) $markObj;
+        // });
+
+        // return $studentMarks;
+
+        return view('subject.marks', compact('studentMarks', 'subject'));
+    }
+
     public function removeStudent(Request $request, Subject $subject)
     {
         DB::table('student_subject')
