@@ -15,13 +15,26 @@
            @if(auth()->user()->hasPermission('student.absence_count'))
            <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('student.absence_count') }}">مرات الغياب</a>
            @endif
+
+           @if(auth()->user()->hasPermission('subject.index'))
+           <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('subject.index') }}">  
+            المواد الدراسية 
+           </a>
+           @endif
+
+           @if(auth()->user()->hasPermission('mark.index'))
+           <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('mark.index') }}">  
+           نقاط الطلاب
+           </a>
+           @endif
+           
            </div>
         </div>
 
             @include('inc._modal_add_subject')
 
             @foreach($subjects as $subject)
-            <div class=" bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="mt-1 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-3 text-red-800 border-b flex justify-between">
                     <div>
                         <div class="text-xl"> {{ $subject->title }} </div>
@@ -30,7 +43,7 @@
                     @include('inc._modal_edit_subject')
                 </div>
 
-                <div class="p-3 mt-2 flex gap-3">
+                <div class=" p-3 flex gap-3">
                     <a class="w-52 p-1 rounded border text-center text-xs" href="{{ route('student_subject.student.index',$subject->id) }}">
                         الطلاب المسجلين في هذه المادة
                     </a>

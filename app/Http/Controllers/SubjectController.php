@@ -4,11 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Mark;
 use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class SubjectController extends Controller
 {
+
+    public function index()
+    {
+        $loggedUser = auth()->user();
+
+        $teacherIds = User::where('center_id',$loggedUser->center_id)->pluck('id');
+    
+        $subjects = Subject::whereIn('teacher_id',$teacherIds)->get();
+        
+        return view('subject.index', compact('subjects'));
+    }
 
 
     public function store(Request $request)

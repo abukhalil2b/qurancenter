@@ -110,6 +110,9 @@ Route::group(['middleware'=>'auth'],function(){
 /*---- subject -----*/
 Route::group(['middleware'=>'auth'],function(){
 
+    Route::get('subject/index',[SubjectController::class,'index'])
+    ->name('subject.index');
+
     Route::post('subject/store',[SubjectController::class,'store'])
     ->name('subject.store');
 
@@ -182,7 +185,10 @@ Route::group(['middleware'=>'auth'],function(){
 /*---- marks -----*/
 Route::group(['middleware'=>'auth'],function(){
 
-    Route::get('mark/student/index/{task}/{subject}',[MarkController::class,'index'])
+    Route::get('mark/index',[MarkController::class,'index'])
+    ->name('mark.index');
+
+    Route::get('mark/student/index/{task}/{subject}',[MarkController::class,'studentIndex'])
     ->name('mark.student.index');
 
     Route::get('mark/student/show/{task}/{student}/{subject}',[MarkController::class,'show'])

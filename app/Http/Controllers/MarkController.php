@@ -11,10 +11,36 @@ use Illuminate\Support\Facades\DB;
 
 class MarkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Task $task, Subject $subject)
+    
+    public function index()
+    {
+        $loggedUser = auth()->user();
+
+        $teacherIds = User::where('center_id',$loggedUser->center_id)->pluck('id');
+        
+        $subjects = Subject::whereIn('teacher_id',$teacherIds)->get();
+
+        $taskIds = [];
+
+        foreach($subjects as $subject){
+
+            $ids = $subject->tasks()->pluck('tasks.id');
+
+            array_push($taskIds,...$ids);
+        }
+        
+        // return $taskIds;
+        $studentMarks = Mark::whereIn('task_id', $taskIds)
+            ->select('name', DB::raw("SUM(memorize) as memorize, SUM(recite) as recite, SUM(behave) as behave"), DB::raw("(SUM(memorize) + SUM(recite) + SUM(behave)) as totalPoints"))
+            ->join('users', 'marks.student_id', '=', 'users.id')
+            ->groupby('student_id')
+            ->orderby('totalPoints', 'DESC')
+            ->get();
+
+        return view('mark.index', compact('studentMarks'));
+    }
+
+    public function studentIndex(Task $task, Subject $subject)
     {
 
         $studentSubjects = DB::table('student_subject')
@@ -47,17 +73,7 @@ class MarkController extends Controller
         return view('mark.student.index', compact('students', 'task', 'subject'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+ 
     public function store(Request $request)
     {
         $mark = Mark::where([
