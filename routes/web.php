@@ -96,6 +96,10 @@ Route::group(['middleware'=>'auth'],function(){
     ->middleware('permission:student.absence_count')
     ->name('student.absence_count');
 
+    Route::get('student/present_count',[UserController::class,'presentCountStudent'])
+    ->middleware('permission:student.present_count')
+    ->name('student.present_count');
+
     Route::get('student/show/{student}',[UserController::class,'showStudent'])
     ->name('student.show');
 

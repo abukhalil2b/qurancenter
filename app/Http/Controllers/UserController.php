@@ -40,6 +40,21 @@ class UserController extends Controller
 
         return view('student.absence_count', compact('students'));
     }
+
+    public function presentCountStudent(){
+        
+        $loggedUser = auth()->user();
+
+        $students = Attendance::where('attendances.center_id',$loggedUser->center_id)
+        ->whereNotNull('attend_at')
+        ->select(DB::raw('COUNT(student_id) AS presentTimes'),'name')
+        ->join('users','attendances.student_id','=','users.id')
+        ->groupby('student_id')
+        ->orderby('presentTimes','desc')
+        ->get();
+
+        return view('student.present_count', compact('students'));
+    }
     
     public function updateStudent(Request $request, User $student)
     {

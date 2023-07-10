@@ -1,6 +1,9 @@
 <x-app-layout>
 
     <div class="p-1 max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div>
+            سجل الحضور والغياب <span class="inline-flex w-7 h-7 rounded-full border border-red-800 items-center justify-center">{{ count($records) }}</span>
+        </div>
         <span class="text-red-800">المادة: </span>{{ $subject->title }}
         @include('inc._modal_add_record')
 

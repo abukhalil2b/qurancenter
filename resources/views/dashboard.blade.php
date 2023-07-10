@@ -16,6 +16,10 @@
            <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('student.absence_count') }}">مرات الغياب</a>
            @endif
 
+           @if(auth()->user()->hasPermission('student.present_count'))
+           <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('student.present_count') }}">مرات الحضور</a>
+           @endif
+
            @if(auth()->user()->hasPermission('subject.index'))
            <a class="w-32 p-1 rounded border text-center text-xs" href="{{ route('subject.index') }}">  
             المواد الدراسية 
