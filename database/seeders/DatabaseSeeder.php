@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Center;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $centers = [
+            ['title' => 'مسجد الإستقامة','title'=>'القريتيين']
+        ];
+
+        Center::create(['title' => 'مسجد الإستقامة']);
+        Center::create(['title'=>'القريتيين']);
+
         $users = [
             [
                 'name'=>'الدعم الفني',
@@ -28,6 +37,7 @@ class DatabaseSeeder extends Seeder
                 'profile'=>'teacher',
                 'idcard'=>'91171747',
                 'phone'=>'91171747',
+                'center_id'=>1,
                 'password'=>Hash::make('91171747')
             ],
             [
@@ -35,6 +45,7 @@ class DatabaseSeeder extends Seeder
                 'profile'=>'teacher',
                 'idcard'=>'99615429',
                 'phone'=>'99615429',
+                'center_id'=>1,
                 'password'=>Hash::make('99615429')
             ],
             [
@@ -42,6 +53,7 @@ class DatabaseSeeder extends Seeder
                 'profile'=>'teacher',
                 'idcard'=>'98939404',
                 'phone'=>'98939404',
+                'center_id'=>2,
                 'password'=>Hash::make('98939404')
             ]
         ];

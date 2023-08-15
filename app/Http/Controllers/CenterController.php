@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Center;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CenterController extends Controller
 {
@@ -43,7 +44,8 @@ class CenterController extends Controller
      */
     public function show(Center $center)
     {
-        
+        Gate::authorize('view',$center);
+
         return view('admin.center.show',compact('center'));
     }
 
